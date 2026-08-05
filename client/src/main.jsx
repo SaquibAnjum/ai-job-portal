@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './api';
+
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { ThemeProvider } from './context/ThemeContext';

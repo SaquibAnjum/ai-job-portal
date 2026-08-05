@@ -26,12 +26,28 @@ initSocket(server);
 
 // Security & Utility Middlewares
 app.use(helmet({ contentSecurityPolicy: false }));
+const allowedOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',').map((url) => url.trim())
+  : ['http://localhost:5173'];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        !process.env.CLIENT_URL ||
+        process.env.CLIENT_URL === '*' ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app')
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());

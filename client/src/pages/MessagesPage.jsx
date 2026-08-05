@@ -16,14 +16,19 @@ const MessagesPage = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const typingTimeoutRef = useRef(null);
+  const userId = user?.id;
 
   useEffect(() => {
-    socket = io(window.location.origin || 'http://localhost:5000', {
+    const socketUrl =
+      import.meta.env.VITE_API_URL ||
+      (import.meta.env.DEV ? 'http://localhost:5000' : 'https://ai-job-portal-z0zc.onrender.com');
+    socket = io(socketUrl, {
+
       transports: ['websocket', 'polling'],
     });
 
-    if (user?.id) {
-      socket.emit('user_online', user.id);
+    if (userId) {
+      socket.emit('user_online', userId);
     }
 
     socket.on('online_users_list', (users) => {
@@ -45,7 +50,7 @@ const MessagesPage = () => {
     return () => {
       socket.disconnect();
     };
-  }, [user?.id]);
+  }, [userId]);
 
   const handleFetchHistory = async () => {
     if (!otherUserId) return;
