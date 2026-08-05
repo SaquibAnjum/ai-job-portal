@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyEmailOtp, resendOtp, clearError } from '../redux/slices/authSlice';
-import { Sparkles, KeyRound, ArrowRight, RefreshCw, AlertCircle, CheckCircle } from 'lucide-react';
+import { KeyRound, ArrowRight, RefreshCw, AlertCircle, CheckCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -61,39 +61,39 @@ const VerifyEmailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <div className="flex-1 flex items-center justify-center p-4 py-12">
-        <div className="w-full max-w-md glass-card p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
+        <div className="w-full max-w-md glass-card p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xl space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto mb-3">
-              <KeyRound className="w-6 h-6 text-indigo-400" />
+            <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-600/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center mx-auto mb-3">
+              <KeyRound className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
             </div>
-            <h2 className="text-2xl font-bold text-white">Verify Your Email</h2>
-            <p className="text-xs text-slate-400">
-              We sent a 6-digit verification code to <span className="text-indigo-300 font-semibold">{email || 'your email'}</span>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Verify Your Email</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              We sent a 6-digit verification code to <span className="text-indigo-600 dark:text-indigo-300 font-semibold">{email || 'your email'}</span>
             </p>
           </div>
 
-          <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-center space-y-1">
-            <p className="text-[11px] text-indigo-300 font-semibold flex items-center justify-center gap-1">
+          <div className="p-3 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 rounded-xl text-center space-y-1">
+            <p className="text-[11px] text-indigo-800 dark:text-indigo-300 font-semibold flex items-center justify-center gap-1">
               <span>📩 Check your Inbox & Spam / Junk / Promotions tab!</span>
             </p>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-slate-600 dark:text-slate-400">
               The 6-digit verification code is included directly in the email subject & body.
             </p>
           </div>
 
           {error && (
-            <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center gap-2 text-xs text-rose-400">
+            <div className="p-3 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-xl flex items-center gap-2 text-xs text-rose-800 dark:text-rose-400">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           {infoMessage && (
-            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-2 text-xs text-emerald-400">
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl flex items-center gap-2 text-xs text-emerald-800 dark:text-emerald-400">
               <CheckCircle className="w-4 h-4 shrink-0" />
               <span>{infoMessage}</span>
             </div>
@@ -102,20 +102,20 @@ const VerifyEmailPage = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {!emailParam && (
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full glass-input rounded-xl px-4 py-2.5 text-xs focus:outline-none"
                   placeholder="candidate@example.com"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">6-Digit Verification Code</label>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">6-Digit Verification Code</label>
               <input
                 type="text"
                 required
@@ -123,7 +123,7 @@ const VerifyEmailPage = () => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                 placeholder="123456"
-                className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-center text-lg tracking-[8px] font-mono text-white focus:outline-none focus:border-indigo-500"
+                className="w-full glass-input rounded-xl px-4 py-3 text-center text-lg tracking-[8px] font-mono focus:outline-none"
               />
             </div>
 
@@ -136,19 +136,19 @@ const VerifyEmailPage = () => {
             </button>
           </form>
 
-          <div className="pt-4 border-t border-slate-800/80 text-center space-y-2">
-            <p className="text-xs text-slate-400">Didn't receive the email code?</p>
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 text-center space-y-2">
+            <p className="text-xs text-slate-600 dark:text-slate-400">Didn't receive the email code?</p>
             <button
               onClick={handleResend}
               disabled={!canResend || loading}
-              className="text-xs text-indigo-400 font-semibold hover:underline flex items-center justify-center gap-1.5 mx-auto disabled:opacity-50"
+              className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center justify-center gap-1.5 mx-auto disabled:opacity-50"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${!canResend ? 'animate-spin' : ''}`} />
               {canResend ? 'Resend Verification Code' : `Resend available in ${countdown}s`}
             </button>
 
             <div className="pt-2">
-              <Link to="/login" className="text-[11px] text-slate-500 hover:text-slate-300">
+              <Link to="/login" className="text-[11px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-300">
                 Back to Sign In
               </Link>
             </div>

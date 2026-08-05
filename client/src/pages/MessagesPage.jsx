@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { io } from 'socket.io-client';
-import { MessageSquare, Send, User, Circle, Loader2 } from 'lucide-react';
+import { MessageSquare, Send, Circle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -104,24 +104,24 @@ const MessagesPage = () => {
   const isRecipientOnline = onlineUsers.includes(otherUserId);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-        <div className="glass-card rounded-3xl border border-slate-800 h-[620px] flex flex-col overflow-hidden shadow-2xl">
+        <div className="glass-card rounded-3xl border border-slate-200/80 dark:border-slate-800 h-[620px] flex flex-col overflow-hidden shadow-2xl">
           {/* Header */}
-          <div className="p-4 bg-slate-900 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-4 bg-slate-100/90 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-indigo-400" />
+              <MessageSquare className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
               <div>
-                <h2 className="text-sm font-bold text-white">Live Candidate-Recruiter Chat</h2>
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white">Live Candidate-Recruiter Chat</h2>
                 {otherUserId && (
-                  <p className="text-[10px] flex items-center gap-1 font-semibold text-slate-400">
+                  <p className="text-[10px] flex items-center gap-1 font-semibold text-slate-500 dark:text-slate-400">
                     Status:{' '}
                     {isRecipientOnline ? (
-                      <span className="text-emerald-400 flex items-center gap-1"><Circle className="w-2 h-2 fill-emerald-400 text-emerald-400" /> Online</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" /> Online</span>
                     ) : (
-                      <span className="text-slate-500">Offline</span>
+                      <span className="text-slate-400 dark:text-slate-500">Offline</span>
                     )}
                   </p>
                 )}
@@ -134,11 +134,11 @@ const MessagesPage = () => {
                 placeholder="Recipient User ID..."
                 value={otherUserId}
                 onChange={(e) => setOtherUserId(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white outline-none focus:border-indigo-500"
+                className="glass-input rounded-xl px-3 py-1.5 text-xs focus:outline-none"
               />
               <button
                 onClick={handleFetchHistory}
-                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 rounded-xl border border-slate-700 transition"
+                className="px-3 py-1.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 rounded-xl border border-slate-300 dark:border-slate-700 transition"
               >
                 Load Chat
               </button>
@@ -146,9 +146,9 @@ const MessagesPage = () => {
           </div>
 
           {/* Messages Feed */}
-          <div className="flex-1 p-6 overflow-y-auto space-y-4 bg-slate-950/60">
+          <div className="flex-1 p-6 overflow-y-auto space-y-4 bg-slate-50/60 dark:bg-slate-950/60">
             {messages.length === 0 ? (
-              <div className="text-center py-20 text-slate-500 text-xs">
+              <div className="text-center py-20 text-slate-400 dark:text-slate-500 text-xs">
                 Enter recipient User ID and click "Load Chat" to begin messaging.
               </div>
             ) : (
@@ -160,7 +160,7 @@ const MessagesPage = () => {
                       className={`max-w-[75%] p-3.5 rounded-2xl text-xs shadow-md ${
                         isMe
                           ? 'bg-indigo-600 text-white rounded-br-none'
-                          : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-none'
+                          : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-bl-none'
                       }`}
                     >
                       <div>{m.content}</div>
@@ -175,7 +175,7 @@ const MessagesPage = () => {
 
             {isTyping && (
               <div className="flex justify-start">
-                <div className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-2xl text-xs text-slate-400 italic animate-pulse">
+                <div className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs text-slate-500 dark:text-slate-400 italic animate-pulse">
                   Recipient is typing...
                 </div>
               </div>
@@ -183,13 +183,13 @@ const MessagesPage = () => {
           </div>
 
           {/* Send Box */}
-          <form onSubmit={handleSend} className="p-4 bg-slate-900 border-t border-slate-800 flex gap-2">
+          <form onSubmit={handleSend} className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex gap-2">
             <input
               type="text"
               placeholder="Type message..."
               value={text}
               onChange={handleInputChange}
-              className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white outline-none focus:border-indigo-500"
+              className="flex-1 glass-input rounded-xl px-4 py-2.5 text-xs focus:outline-none"
             />
             <button
               type="submit"

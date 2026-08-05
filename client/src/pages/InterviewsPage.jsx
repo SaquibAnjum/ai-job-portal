@@ -44,7 +44,6 @@ const InterviewsPage = () => {
   const fetchRecruiterApplications = async () => {
     try {
       const token = localStorage.getItem('token');
-      // Fetch recruiter jobs to get applications
       const jobsRes = await axios.get('/api/v1/recruiter/my-jobs', {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -91,23 +90,23 @@ const InterviewsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-600 dark:text-indigo-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
-        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-extrabold text-white flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-indigo-400" /> Scheduled Technical & HR Interviews
+            <h1 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-indigo-600 dark:text-indigo-400" /> Scheduled Technical & HR Interviews
             </h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Real-time interview calendar with automated Gemini AI interview question banks.
             </p>
           </div>
@@ -123,23 +122,23 @@ const InterviewsPage = () => {
         </div>
 
         {interviews.length === 0 ? (
-          <div className="glass-card p-12 text-center rounded-3xl border border-slate-800 text-slate-400 text-xs">
+          <div className="glass-card p-12 text-center rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs">
             No active interviews currently scheduled.
           </div>
         ) : (
           <div className="space-y-6">
             {interviews.map((item) => (
-              <div key={item._id} className="glass-card p-6 rounded-3xl border border-slate-800 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+              <div key={item._id} className="glass-card p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-4">
                   <div>
-                    <span className="text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    <span className="text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30">
                       {item.type} Interview
                     </span>
-                    <h3 className="text-base font-bold text-white mt-1">
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white mt-1">
                       {item.application?.job?.title} @ {item.application?.job?.company?.name || 'Partner Company'}
                     </h3>
-                    <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                      <User className="w-3.5 h-3.5 text-indigo-400" /> Candidate: {item.candidate?.name} ({item.candidate?.email})
+                    <p className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1 mt-0.5">
+                      <User className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Candidate: {item.candidate?.name} ({item.candidate?.email})
                     </p>
                   </div>
 
@@ -153,25 +152,25 @@ const InterviewsPage = () => {
                   </a>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs text-slate-400">
+                <div className="flex items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-indigo-400" /> Date: {new Date(item.scheduledAt).toLocaleString()}
+                    <Clock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Date: {new Date(item.scheduledAt).toLocaleString()}
                   </span>
                   <span>Duration: {item.durationMinutes} Mins</span>
                 </div>
 
                 {/* AI Question Bank Preview */}
                 {item.aiGeneratedQuestions && item.aiGeneratedQuestions.length > 0 && (
-                  <div className="p-4 bg-slate-950/80 rounded-2xl border border-slate-800 space-y-2">
-                    <h4 className="text-xs font-bold text-indigo-300 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> AI Tailored Question Bank:
+                  <div className="p-4 bg-slate-100/80 dark:bg-slate-950/80 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2">
+                    <h4 className="text-xs font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> AI Tailored Question Bank:
                     </h4>
-                    <ul className="space-y-1.5 text-xs text-slate-300">
+                    <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                       {item.aiGeneratedQuestions.map((q, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <span className="text-indigo-400 font-bold">•</span>
+                          <span className="text-indigo-600 dark:text-indigo-400 font-bold">•</span>
                           <div>
-                            <span className="font-semibold text-slate-200">[{q.category}]</span> {q.question}
+                            <span className="font-semibold text-slate-900 dark:text-slate-200">[{q.category}]</span> {q.question}
                           </div>
                         </li>
                       ))}
@@ -186,19 +185,19 @@ const InterviewsPage = () => {
 
       {/* Schedule Interview Modal */}
       {showScheduleModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-800 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
-            <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-indigo-400" /> Schedule Interview Session
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-indigo-600 dark:text-indigo-400" /> Schedule Interview Session
             </h3>
 
             <form onSubmit={handleScheduleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Select Candidate Application</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Select Candidate Application</label>
                 <select
                   value={selectedAppId}
                   onChange={(e) => setSelectedAppId(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100"
+                  className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                 >
                   {applications.map((app) => (
                     <option key={app._id} value={app._id}>
@@ -209,23 +208,23 @@ const InterviewsPage = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Date & Time</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Date & Time</label>
                 <input
                   type="datetime-local"
                   required
                   value={scheduledAt}
                   onChange={(e) => setScheduledAt(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100"
+                  className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Type</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Type</label>
                   <select
                     value={interviewType}
                     onChange={(e) => setInterviewType(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100"
+                    className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                   >
                     <option value="Technical">Technical</option>
                     <option value="HR / Cultural">HR / Cultural</option>
@@ -235,35 +234,35 @@ const InterviewsPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Duration (Minutes)</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Duration (Minutes)</label>
                   <input
                     type="number"
                     value={durationMinutes}
                     onChange={(e) => setDurationMinutes(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100"
+                    className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Meeting Call Link</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Meeting Call Link</label>
                 <input
                   type="url"
                   required
                   value={meetingLink}
                   onChange={(e) => setMeetingLink(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100"
+                  className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                 />
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={() => setShowScheduleModal(false)} className="px-4 py-2 text-xs text-slate-400">
+                <button type="button" onClick={() => setShowScheduleModal(false)} className="px-4 py-2 text-xs text-slate-600 dark:text-slate-400">
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold disabled:opacity-50"
+                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30 disabled:opacity-50"
                 >
                   {submitting ? 'Scheduling & Generating AI Questions...' : 'Schedule Interview'}
                 </button>

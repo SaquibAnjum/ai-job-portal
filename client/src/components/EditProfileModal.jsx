@@ -162,27 +162,27 @@ const EditProfileModal = ({ isOpen, onClose, profileData, onProfileUpdated }) =>
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
         {/* Header */}
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-950/50">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-indigo-600/20 text-indigo-400 rounded-2xl border border-indigo-500/30">
+            <div className="p-2.5 bg-indigo-100 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 rounded-2xl border border-indigo-200 dark:border-indigo-500/30">
               <User className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-white">Edit Candidate Profile</h2>
-              <p className="text-xs text-slate-400">Update your complete professional identity across NexHire.AI</p>
+              <h2 className="text-lg font-extrabold text-slate-900 dark:text-white">Edit Candidate Profile</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Update your complete professional identity across NexHire.AI</p>
             </div>
           </div>
 
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition">
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-800 bg-slate-950/30 px-6 overflow-x-auto scrollbar-none">
+        <div className="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-950/30 px-6 overflow-x-auto scrollbar-none">
           {[
             { id: 'personal', label: 'Personal & Contact', icon: User },
             { id: 'experience', label: 'Experience', icon: Briefcase },
@@ -198,8 +198,8 @@ const EditProfileModal = ({ isOpen, onClose, profileData, onProfileUpdated }) =>
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 py-3.5 px-4 text-xs font-bold whitespace-nowrap border-b-2 transition-all ${
                   activeTab === tab.id
-                    ? 'border-indigo-500 text-indigo-400 bg-indigo-500/10'
-                    : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+                    ? 'border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10'
+                    : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/40 dark:hover:bg-slate-800/30'
                 }`}
               >
                 <Icon className="w-4 h-4" />

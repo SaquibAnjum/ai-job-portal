@@ -22,7 +22,7 @@ function ResetPasswordPage() {
     setError('');
     setMessage('');
     try {
-      const res = await axios.post(`/api/v1/auth/reset-password/${token}`, { password });
+      await axios.post(`/api/v1/auth/reset-password/${token}`, { password });
       setMessage('Password reset successful! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
@@ -33,38 +33,38 @@ function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-300">
       <Navbar />
-      <div className="max-w-md w-full mx-auto my-12 p-8 bg-slate-800 rounded-2xl border border-slate-700 shadow-xl">
-        <h2 className="text-2xl font-bold text-center text-indigo-400 mb-2">Set New Password</h2>
-        <p className="text-slate-400 text-sm text-center mb-6">Enter your new secure account password below.</p>
+      <div className="max-w-md w-full mx-auto my-12 p-8 glass-card rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xl">
+        <h2 className="text-2xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-2">Set New Password</h2>
+        <p className="text-slate-600 dark:text-slate-400 text-sm text-center mb-6">Enter your new secure account password below.</p>
 
-        {message && <div className="p-3 bg-emerald-500/20 text-emerald-300 rounded-lg text-sm mb-4 border border-emerald-500/30">{message}</div>}
-        {error && <div className="p-3 bg-rose-500/20 text-rose-300 rounded-lg text-sm mb-4 border border-rose-500/30">{error}</div>}
+        {message && <div className="p-3 bg-emerald-50 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 rounded-lg text-sm mb-4 border border-emerald-200 dark:border-emerald-500/30">{message}</div>}
+        {error && <div className="p-3 bg-rose-50 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 rounded-lg text-sm mb-4 border border-rose-200 dark:border-rose-500/30">{error}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">New Password</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">New Password</label>
             <input
               type="password"
               required
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-slate-100 outline-none transition"
+              className="w-full glass-input rounded-xl px-4 py-2.5 text-xs focus:outline-none"
               placeholder="••••••••"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Confirm New Password</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Confirm New Password</label>
             <input
               type="password"
               required
               minLength={6}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-slate-100 outline-none transition"
+              className="w-full glass-input rounded-xl px-4 py-2.5 text-xs focus:outline-none"
               placeholder="••••••••"
             />
           </div>
@@ -72,14 +72,14 @@ function ResetPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition shadow-lg shadow-indigo-600/30 disabled:opacity-50"
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl transition shadow-lg shadow-indigo-600/30 disabled:opacity-50"
           >
             {loading ? 'Resetting Password...' : 'Reset Password'}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-slate-400">
-          <Link to="/login" className="text-indigo-400 font-semibold hover:underline">
+        <div className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
+          <Link to="/login" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
             Back to Login
           </Link>
         </div>

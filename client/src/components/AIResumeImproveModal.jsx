@@ -3,7 +3,6 @@ import axios from 'axios';
 import {
   Sparkles,
   CheckCircle2,
-  AlertTriangle,
   FileText,
   Download,
   Flame,
@@ -64,38 +63,38 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden relative">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden relative">
         {/* Header */}
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-950/60">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-2xl border border-emerald-500/30">
+            <div className="p-2.5 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-200 dark:border-emerald-500/30">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-extrabold text-white flex items-center gap-2">
+              <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                 AI ATS Resume Optimizer
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                <span className="text-[10px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/30">
                   Powered by Gemini AI
                 </span>
               </h3>
-              <p className="text-xs text-slate-400">Scan, audit, and rewrite your resume for peak applicant tracking scores</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Scan, audit, and rewrite your resume for peak applicant tracking scores</p>
             </div>
           </div>
 
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition">
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition">
             ✕
           </button>
         </div>
 
         {/* Control Input */}
-        <div className="p-4 bg-slate-950/40 border-b border-slate-800 flex flex-col sm:flex-row gap-3">
+        <div className="p-4 bg-slate-50/50 dark:bg-slate-950/40 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
           <input
             type="text"
             value={targetRole}
             onChange={(e) => setTargetRole(e.target.value)}
             placeholder="Target Desired Role (e.g. Senior Full Stack Engineer)"
-            className="flex-1 px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-slate-100 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
+            className="flex-1 glass-input px-4 py-2.5 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
           />
           <button
             onClick={handleAnalyze}
@@ -116,11 +115,11 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
 
         {/* View Switcher Tabs */}
         {feedback && (
-          <div className="flex border-b border-slate-800 bg-slate-950/20 px-6">
+          <div className="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-950/20 px-6">
             <button
               onClick={() => setActiveTab('report')}
               className={`py-3 px-4 text-xs font-bold border-b-2 transition ${
-                activeTab === 'report' ? 'border-emerald-500 text-emerald-400' : 'border-transparent text-slate-400 hover:text-white'
+                activeTab === 'report' ? 'border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
               }`}
             >
               📊 ATS Score & Report
@@ -128,7 +127,7 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
             <button
               onClick={() => setActiveTab('comparison')}
               className={`py-3 px-4 text-xs font-bold border-b-2 transition ${
-                activeTab === 'comparison' ? 'border-emerald-500 text-emerald-400' : 'border-transparent text-slate-400 hover:text-white'
+                activeTab === 'comparison' ? 'border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
               }`}
             >
               🔄 Before vs After Comparison
@@ -136,7 +135,7 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
             <button
               onClick={() => setActiveTab('improved')}
               className={`py-3 px-4 text-xs font-bold border-b-2 transition ${
-                activeTab === 'improved' ? 'border-emerald-500 text-emerald-400' : 'border-transparent text-slate-400 hover:text-white'
+                activeTab === 'improved' ? 'border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
               }`}
             >
               📄 Improved Resume Code
@@ -148,11 +147,11 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {!feedback && !loading && (
             <div className="text-center py-16 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/20">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center border border-emerald-200 dark:border-emerald-500/20">
                 <Sparkles className="w-8 h-8" />
               </div>
-              <h4 className="text-base font-bold text-white">Click "Run ATS Audit" to Analyze Your Resume</h4>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white">Click "Run ATS Audit" to Analyze Your Resume</h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                 Gemini AI will inspect your extracted skills, experience bullet points, and formatting against active industry ATS scanners.
               </p>
             </div>
@@ -160,27 +159,27 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
 
           {loading && (
             <div className="text-center py-20 space-y-4">
-              <RefreshCw className="w-10 h-10 animate-spin text-emerald-400 mx-auto" />
-              <p className="text-xs font-bold text-slate-200">Gemini AI is analyzing resume structure and computing ATS score...</p>
+              <RefreshCw className="w-10 h-10 animate-spin text-emerald-600 dark:text-emerald-400 mx-auto" />
+              <p className="text-xs font-bold text-slate-800 dark:text-slate-200">Gemini AI is analyzing resume structure and computing ATS score...</p>
             </div>
           )}
 
           {feedback && !loading && activeTab === 'report' && (
             <div className="space-y-6">
               {/* ATS Score Header Card */}
-              <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
                 <div className="flex items-center gap-6">
-                  <div className="relative flex items-center justify-center w-24 h-24 rounded-full bg-slate-900 ring-4 ring-emerald-500/30">
+                  <div className="relative flex items-center justify-center w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-900 ring-4 ring-emerald-500/30">
                     <div className="text-center">
-                      <span className="text-3xl font-extrabold text-emerald-400">{feedback.atsScore || 86}</span>
-                      <span className="block text-[9px] uppercase font-bold text-slate-400">ATS Score</span>
+                      <span className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{feedback.atsScore || 86}</span>
+                      <span className="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">ATS Score</span>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="text-base font-extrabold text-white">Resume Match Strength</h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">{feedback.resumeStrength}</p>
-                    <p className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1 mt-1">
+                    <h4 className="text-base font-extrabold text-slate-900 dark:text-white">Resume Match Strength</h4>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{feedback.resumeStrength}</p>
+                    <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1 mt-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Ready for ATS candidate filtering
                     </p>
                   </div>
@@ -197,13 +196,13 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
               {/* Grid Metrics */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Missing Keywords */}
-                <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
-                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
+                  <h4 className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
                     <Key className="w-4 h-4" /> Missing Keywords ({feedback.missingKeywords?.length || 0})
                   </h4>
                   <div className="flex flex-wrap gap-1.5">
                     {feedback.missingKeywords?.map((kw, idx) => (
-                      <span key={idx} className="px-2.5 py-1 bg-amber-950/50 text-amber-300 border border-amber-800/40 rounded-lg text-xs font-medium">
+                      <span key={idx} className="px-2.5 py-1 bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/40 rounded-lg text-xs font-medium">
                         + {kw}
                       </span>
                     ))}
@@ -211,13 +210,13 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
                 </div>
 
                 {/* Missing Skills */}
-                <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
-                  <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
+                  <h4 className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-2">
                     <Flame className="w-4 h-4" /> Missing Skills ({feedback.missingSkills?.length || 0})
                   </h4>
                   <div className="flex flex-wrap gap-1.5">
                     {feedback.missingSkills?.map((sk, idx) => (
-                      <span key={idx} className="px-2.5 py-1 bg-rose-950/50 text-rose-300 border border-rose-800/40 rounded-lg text-xs font-medium">
+                      <span key={idx} className="px-2.5 py-1 bg-rose-100 dark:bg-rose-950/50 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40 rounded-lg text-xs font-medium">
                         + {sk}
                       </span>
                     ))}
@@ -226,14 +225,14 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
               </div>
 
               {/* Action Verbs & Recruiter Suggestions */}
-              <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
-                <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-4">
+                <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider flex items-center gap-2">
                   <Sparkles className="w-4 h-4" /> Recruiter Strategic Recommendations
                 </h4>
-                <ul className="space-y-2 text-xs text-slate-300">
+                <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                   {feedback.recruiterSuggestions?.map((sug, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="text-indigo-400 font-bold">•</span>
+                      <span className="text-indigo-600 dark:text-indigo-400 font-bold">•</span>
                       <span>{sug}</span>
                     </li>
                   ))}
@@ -241,13 +240,13 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
               </div>
 
               {/* High Impact Action Verbs */}
-              <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
-                <h4 className="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-2">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
+                <h4 className="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-2">
                   <Layers className="w-4 h-4" /> Recommended Power Action Verbs
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {feedback.actionVerbs?.map((verb, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-purple-950/40 text-purple-300 border border-purple-800/30 rounded-lg text-xs font-bold">
+                    <span key={idx} className="px-3 py-1 bg-purple-100 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800/30 rounded-lg text-xs font-bold">
                       {verb}
                     </span>
                   ))}
@@ -261,18 +260,18 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Current Profile Summary */}
-                <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <span className="text-xs font-bold text-slate-400 uppercase">Current Resume Summary</span>
-                    <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">Original</span>
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Current Resume Summary</span>
+                    <span className="text-[10px] bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-600 dark:text-slate-400">Original</span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed italic">
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic">
                     "{currentProfile?.resumeSummary || 'Standard full stack software developer profile.'}"
                   </p>
 
-                  <div className="pt-3 border-t border-slate-800">
-                    <span className="text-[11px] font-semibold text-slate-400 block mb-2">Original Experience Bullets:</span>
-                    <ul className="text-xs text-slate-400 space-y-1 list-disc list-inside">
+                  <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-2">Original Experience Bullets:</span>
+                    <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc list-inside">
                       {currentProfile?.experience?.slice(0, 2).map((exp, idx) => (
                         <li key={idx}>{exp.description || `${exp.title} at ${exp.company}`}</li>
                       )) || <li>Worked on web application features and API endpoints.</li>}
@@ -281,25 +280,25 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
                 </div>
 
                 {/* Improved Profile Summary */}
-                <div className="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-3">
-                  <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
-                    <span className="text-xs font-bold text-emerald-400 uppercase flex items-center gap-1">
+                <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-500/30 space-y-3">
+                  <div className="flex items-center justify-between border-b border-emerald-200 dark:border-emerald-500/20 pb-2">
+                    <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase flex items-center gap-1">
                       <Sparkles className="w-3.5 h-3.5" /> Improved ATS Summary
                     </span>
-                    <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-bold">
+                    <span className="text-[10px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded font-bold">
                       Optimized
                     </span>
                   </div>
-                  <p className="text-xs text-slate-200 leading-relaxed italic font-medium">
+                  <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed italic font-medium">
                     "{feedback.improveSummary}"
                   </p>
 
-                  <div className="pt-3 border-t border-emerald-500/20">
-                    <span className="text-[11px] font-semibold text-emerald-300 block mb-2">Quantified Experience Bullets:</span>
-                    <ul className="text-xs text-slate-200 space-y-2">
+                  <div className="pt-3 border-t border-emerald-200 dark:border-emerald-500/20">
+                    <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300 block mb-2">Quantified Experience Bullets:</span>
+                    <ul className="text-xs text-slate-700 dark:text-slate-200 space-y-2">
                       {feedback.improveExperience?.map((exp, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
-                          <ArrowRight className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                          <ArrowRight className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                           <span>{exp}</span>
                         </li>
                       ))}
@@ -314,17 +313,17 @@ function AIResumeImproveModal({ isOpen, onClose, currentHeadline, currentProfile
           {feedback && !loading && activeTab === 'improved' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-300 uppercase">Generated ATS Markdown Document</span>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Generated ATS Markdown Document</span>
                 <button
                   onClick={handleCopyImprovedText}
-                  className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition"
+                  className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition border border-slate-200 dark:border-slate-700"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   {copied ? 'Copied!' : 'Copy Code'}
                 </button>
               </div>
 
-              <pre className="p-5 bg-slate-950 border border-slate-800 rounded-2xl text-slate-300 text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap">
+              <pre className="p-5 bg-slate-900 dark:bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap rounded-2xl">
                 {feedback.improvedResumeText}
               </pre>
             </div>

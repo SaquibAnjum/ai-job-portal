@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Briefcase, Users, Plus, Sparkles, CheckCircle2, XCircle, Calendar, FileDown, Search, Loader2, ShieldCheck, Trophy } from 'lucide-react';
+import { Plus, Sparkles, Loader2, ShieldCheck, Trophy } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MatchGauge from '../components/MatchGauge';
@@ -172,44 +172,44 @@ const RecruiterDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-600 dark:text-indigo-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
         {/* Recruiter Banner & Metrics */}
-        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-extrabold text-white">Recruiter Command Center</h1>
+              <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">Recruiter Command Center</h1>
               {profile?.company?.isVerified ? (
-                <span className="flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                <span className="flex items-center gap-1 text-[10px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-500/30 font-bold">
                   <ShieldCheck className="w-3.5 h-3.5" /> Verified Company
                 </span>
               ) : (
                 <button
                   onClick={handleRequestVerification}
-                  className="text-[10px] bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/30 hover:bg-amber-500/30 transition"
+                  className="text-[10px] bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-300 dark:border-amber-500/30 hover:bg-amber-200 dark:hover:bg-amber-500/30 transition font-bold"
                 >
                   {profile?.company?.verificationRequested ? 'Verification Pending...' : 'Request Verification'}
                 </button>
               )}
             </div>
-            <p className="text-xs text-indigo-400 font-medium mt-0.5">{profile?.company?.name || 'Nexus AI Technologies'}</p>
+            <p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">{profile?.company?.name || 'Nexus AI Technologies'}</p>
           </div>
 
           <div className="flex gap-3">
             <button
               onClick={() => setIsRankingModalOpen(true)}
-              className="py-3 px-4 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 rounded-xl text-xs font-bold flex items-center gap-2 transition"
+              className="py-3 px-4 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-500/30 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-sm"
             >
-              <Trophy className="w-4 h-4 text-purple-400" /> AI Applicant Ranking
+              <Trophy className="w-4 h-4 text-purple-600 dark:text-purple-400" /> AI Applicant Ranking
             </button>
 
             <button
@@ -223,37 +223,37 @@ const RecruiterDashboard = () => {
 
         {/* Analytics Widgets */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="glass-card p-5 rounded-2xl border border-slate-800 text-center">
-            <p className="text-xs text-slate-400 font-medium">Active Jobs</p>
-            <p className="text-2xl font-extrabold text-white mt-1">{analytics?.activeJobs || 0}</p>
+          <div className="glass-card p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Active Jobs</p>
+            <p className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">{analytics?.activeJobs || 0}</p>
           </div>
-          <div className="glass-card p-5 rounded-2xl border border-slate-800 text-center">
-            <p className="text-xs text-slate-400 font-medium">Draft Jobs</p>
-            <p className="text-2xl font-extrabold text-amber-400 mt-1">{analytics?.draftJobs || 0}</p>
+          <div className="glass-card p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Draft Jobs</p>
+            <p className="text-2xl font-extrabold text-amber-600 dark:text-amber-400 mt-1">{analytics?.draftJobs || 0}</p>
           </div>
-          <div className="glass-card p-5 rounded-2xl border border-slate-800 text-center">
-            <p className="text-xs text-slate-400 font-medium">Total Applicants</p>
-            <p className="text-2xl font-extrabold text-indigo-400 mt-1">{analytics?.totalApplications || 0}</p>
+          <div className="glass-card p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Applicants</p>
+            <p className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">{analytics?.totalApplications || 0}</p>
           </div>
-          <div className="glass-card p-5 rounded-2xl border border-slate-800 text-center">
-            <p className="text-xs text-slate-400 font-medium">Offers Issued</p>
-            <p className="text-2xl font-extrabold text-emerald-400 mt-1">{analytics?.funnel?.offered || 0}</p>
+          <div className="glass-card p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Offers Issued</p>
+            <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">{analytics?.funnel?.offered || 0}</p>
           </div>
         </div>
 
         {/* AI Candidate Ranking Engine */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Job Selector Sidebar */}
-          <div className="lg:col-span-1 glass-card p-6 rounded-3xl border border-slate-800 space-y-4">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider">Your Posted Positions</h3>
+          <div className="lg:col-span-1 glass-card p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 space-y-4">
+            <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Your Posted Positions</h3>
             <div className="space-y-2">
               {jobs.map((job) => (
                 <div
                   key={job._id}
                   className={`p-3.5 rounded-xl border transition-all flex items-center justify-between gap-2 ${
                     selectedJobId === job._id
-                      ? 'bg-indigo-600/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/20 font-bold'
-                      : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+                      ? 'bg-indigo-50 dark:bg-indigo-600/20 border-indigo-500 text-slate-900 dark:text-white shadow-md font-bold'
+                      : 'bg-slate-50/80 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <button
@@ -263,10 +263,10 @@ const RecruiterDashboard = () => {
                     }}
                     className="text-left flex-1"
                   >
-                    <p className="font-bold text-slate-200 text-xs">{job.title}</p>
+                    <p className="font-bold text-slate-900 dark:text-slate-200 text-xs">{job.title}</p>
                     <span
                       className={`inline-block mt-1 text-[9px] px-2 py-0.5 rounded-md font-bold uppercase ${
-                        job.status === 'Active' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'
+                        job.status === 'Active' ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300'
                       }`}
                     >
                       {job.status}
@@ -275,7 +275,7 @@ const RecruiterDashboard = () => {
 
                   <button
                     onClick={() => handleToggleJobStatus(job._id, job.status)}
-                    className="text-[10px] text-slate-400 hover:text-white px-2 py-1 bg-slate-900 border border-slate-800 rounded-md"
+                    className="text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md shadow-sm"
                   >
                     {job.status === 'Active' ? 'Unpublish' : 'Publish'}
                   </button>
@@ -285,63 +285,63 @@ const RecruiterDashboard = () => {
           </div>
 
           {/* Candidate AI Ranking List */}
-          <div className="lg:col-span-2 glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
+          <div className="lg:col-span-2 glass-card p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-indigo-400" /> Candidate Pipeline for {selectedJobObj?.title || 'Selected Job'}
+              <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Candidate Pipeline for {selectedJobObj?.title || 'Selected Job'}
               </h2>
               <button
                 onClick={() => setIsRankingModalOpen(true)}
-                className="text-xs text-indigo-400 hover:underline font-bold"
+                className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-bold"
               >
                 View Full AI Ranking Matrix →
               </button>
             </div>
 
             {rankedCandidates.length === 0 ? (
-              <p className="text-xs text-slate-400 py-8 text-center">No applications submitted for this role yet.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 py-8 text-center">No applications submitted for this role yet.</p>
             ) : (
               <div className="space-y-4">
                 {rankedCandidates.map((app) => (
                   <div
                     key={app._id}
-                    className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3"
+                    className="p-5 rounded-2xl bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <img
                           src={app.candidate?.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'}
                           alt={app.candidate?.name}
-                          className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-700"
+                          className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-200 dark:ring-slate-700"
                         />
                         <div>
-                          <h4 className="text-xs font-bold text-white">{app.candidate?.name}</h4>
-                          <p className="text-[11px] text-slate-400">{app.candidate?.email}</p>
+                          <h4 className="text-xs font-bold text-slate-900 dark:text-white">{app.candidate?.name}</h4>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400">{app.candidate?.email}</p>
                         </div>
                       </div>
 
                       <MatchGauge score={app.aiMatchAnalysis?.matchScore || 90} size="sm" />
                     </div>
 
-                    <p className="text-xs text-slate-300 bg-slate-900 p-3 rounded-xl border border-slate-800/80">
-                      <span className="font-bold text-indigo-400">AI Reasoning:</span> {app.aiMatchAnalysis?.matchReason}
+                    <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800/80">
+                      <span className="font-bold text-indigo-600 dark:text-indigo-400">AI Reasoning:</span> {app.aiMatchAnalysis?.matchReason}
                     </p>
 
                     <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-900 text-slate-300 border border-slate-800">
+                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">
                         Status: {app.status}
                       </span>
 
                       <div className="flex gap-2 text-xs font-semibold">
                         <button
                           onClick={() => handleUpdateStatus(app._id, 'Shortlisted')}
-                          className="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30"
+                          className="px-3 py-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 hover:bg-emerald-200 dark:hover:bg-emerald-500/30 transition"
                         >
                           Shortlist
                         </button>
                         <button
                           onClick={() => handleUpdateStatus(app._id, 'Rejected')}
-                          className="px-3 py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 hover:bg-rose-500/30"
+                          className="px-3 py-1.5 rounded-lg bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30 hover:bg-rose-200 dark:hover:bg-rose-500/30 transition"
                         >
                           Reject
                         </button>
@@ -355,47 +355,47 @@ const RecruiterDashboard = () => {
         </div>
       </main>
 
-      {/* Create Job Modal with Gemini AI Generator & Draft toggle */}
+      {/* Create Job Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="glass-card w-full max-w-xl p-8 rounded-3xl border border-slate-800 space-y-6">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-indigo-400" /> Create Job Posting
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 w-full max-w-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl space-y-6">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-indigo-600 dark:text-indigo-400" /> Create Job Posting
             </h3>
 
             <form onSubmit={handleCreateJob} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Job Title</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Job Title</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Senior MERN Stack Engineer"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white"
+                  className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Required Skills (Comma separated)</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Required Skills (Comma separated)</label>
                 <input
                   type="text"
                   required
                   placeholder="React.js, Node.js, Express, MongoDB, Tailwind CSS"
                   value={newSkills}
                   onChange={(e) => setNewSkills(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white"
+                  className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-semibold text-slate-300">Job Description</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">Job Description</label>
                   <button
                     type="button"
                     onClick={handleGenerateJd}
                     disabled={generatingJd}
-                    className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+                    className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1"
                   >
                     <Sparkles className="w-3 h-3" /> {generatingJd ? 'Generating AI JD...' : 'Generate with Gemini'}
                   </button>
@@ -405,19 +405,19 @@ const RecruiterDashboard = () => {
                   required
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white"
+                  className="w-full glass-input rounded-xl p-3 text-xs focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Initial Status</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Initial Status</label>
                 <select
                   value={jobStatus}
                   onChange={(e) => setJobStatus(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white"
+                  className="w-full glass-input rounded-xl p-2.5 text-xs focus:outline-none"
                 >
                   <option value="Active">Publish Immediately (Active)</option>
-                  <option value="Draft font-bold">Save as Draft</option>
+                  <option value="Draft">Save as Draft</option>
                 </select>
               </div>
 
@@ -425,13 +425,13 @@ const RecruiterDashboard = () => {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold"
+                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30"
                 >
                   Save Job
                 </button>
@@ -443,22 +443,22 @@ const RecruiterDashboard = () => {
 
       {/* Reject Reason Modal */}
       {rejectingAppId && (
-        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4">
-          <div className="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-lg font-bold text-rose-400">Reject Candidate Application</h3>
-            <p className="text-xs text-slate-400">Provide constructive feedback or rejection reasoning for the candidate:</p>
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <h3 className="text-lg font-bold text-rose-600 dark:text-rose-400">Reject Candidate Application</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Provide constructive feedback or rejection reasoning for the candidate:</p>
             <textarea
               rows={4}
               value={rejectionReason}
               onChange={(e) => setRejectionReason(e.target.value)}
               placeholder="e.g. Qualifications do not align with current senior level requirements."
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100"
+              className="w-full glass-input rounded-xl p-3 text-xs focus:outline-none"
             />
             <div className="flex justify-end gap-2">
-              <button onClick={() => setRejectingAppId(null)} className="px-4 py-2 text-xs text-slate-400">
+              <button onClick={() => setRejectingAppId(null)} className="px-4 py-2 text-xs text-slate-600 dark:text-slate-400">
                 Cancel
               </button>
-              <button onClick={handleConfirmReject} className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl">
+              <button onClick={handleConfirmReject} className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-md">
                 Confirm Rejection
               </button>
             </div>
