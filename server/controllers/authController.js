@@ -81,59 +81,77 @@ exports.register = async (req, res, next) => {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    // Prevent Duplicate Signup
-    const userExists = await User.findOne({ email: normalizedEmail });
-    if (userExists) {
-      return res.status(400).json({
-        success: false,
-        message: 'An account already exists with this email. Please login instead.',
-      });
-    }
-
     // Generate 6-digit OTP code with 10-min expiration
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
-    const user = await User.create({
-      name: name.trim(),
-      email: normalizedEmail,
-      password,
-      role: role || 'candidate',
-      isVerified: false,
-      status: 'Active',
-      otp: {
+    // Prevent Duplicate Verified Signup / Allow Re-Registration for Unverified User
+    let user = await User.findOne({ email: normalizedEmail });
+
+    if (user) {
+      if (user.isVerified) {
+        return res.status(400).json({
+          success: false,
+          message: 'An account already exists with this email. Please login instead.',
+        });
+      }
+      // User exists but is unverified - update credentials & generate fresh OTP
+      user.name = name.trim();
+      user.password = password;
+      user.role = role || 'candidate';
+      user.otp = {
         code: otpCode,
         expiresAt: otpExpires,
         resendCount: 0,
         lastResendAt: new Date(),
-      },
-    });
+      };
+      await user.save();
+    } else {
+      user = await User.create({
+        name: name.trim(),
+        email: normalizedEmail,
+        password,
+        role: role || 'candidate',
+        isVerified: false,
+        status: 'Active',
+        otp: {
+          code: otpCode,
+          expiresAt: otpExpires,
+          resendCount: 0,
+          lastResendAt: new Date(),
+        },
+      });
 
-    if (user.role === 'candidate') {
-      await CandidateProfile.create({ user: user._id });
-      await Subscription.create({ user: user._id, plan: 'Free', aiCredits: 50 });
-    } else if (user.role === 'recruiter') {
-      await RecruiterProfile.create({ user: user._id });
-      await Subscription.create({ user: user._id, plan: 'Recruiter Pro', aiCredits: 200 });
+      if (user.role === 'candidate') {
+        await CandidateProfile.create({ user: user._id });
+        await Subscription.create({ user: user._id, plan: 'Free', aiCredits: 50 });
+      } else if (user.role === 'recruiter') {
+        await RecruiterProfile.create({ user: user._id });
+        await Subscription.create({ user: user._id, plan: 'Recruiter Pro', aiCredits: 200 });
+      }
     }
+
+    console.log(`\n======================================================`);
+    console.log(`🔑 [VERIFICATION OTP GENERATED]`);
+    console.log(`   Email   : ${user.email}`);
+    console.log(`   OTP Code: ${otpCode}`);
+    console.log(`   Expires : 10 Minutes`);
+    console.log(`======================================================\n`);
 
     // Send verification email via Nodemailer
     const emailSent = await sendVerificationEmail(user, otpCode);
 
     if (!emailSent) {
-      // Rollback user and related objects if email fails to deliver
-      await User.deleteOne({ _id: user._id });
-      if (user.role === 'candidate') {
-        await CandidateProfile.deleteOne({ user: user._id });
-        await Subscription.deleteOne({ user: user._id });
-      } else if (user.role === 'recruiter') {
-        await RecruiterProfile.deleteOne({ user: user._id });
-        await Subscription.deleteOne({ user: user._id });
+      console.warn(`[OTP Email Delivery Notice]: Could not deliver email to ${user.email}. OTP is logged in console.`);
+      if (process.env.NODE_ENV === 'development') {
+        await logAudit(user._id, user.email, 'USER_REGISTER', 'User', user._id, { role: user.role }, req);
+        return res.status(201).json({
+          success: true,
+          isUnverified: true,
+          email: user.email,
+          message: `Account created! (Note: Server couldn't deliver email directly; verification code: ${otpCode})`,
+        });
       }
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to deliver OTP verification email. Please verify your email address or SMTP credentials.',
-      });
     }
 
     await logAudit(user._id, user.email, 'USER_REGISTER', 'User', user._id, { role: user.role }, req);
@@ -241,8 +259,22 @@ exports.resendOtp = async (req, res, next) => {
 
     await user.save({ validateBeforeSave: false });
 
+    console.log(`\n======================================================`);
+    console.log(`🔑 [RESEND VERIFICATION OTP GENERATED]`);
+    console.log(`   Email   : ${user.email}`);
+    console.log(`   OTP Code: ${newOtpCode}`);
+    console.log(`   Expires : 10 Minutes`);
+    console.log(`======================================================\n`);
+
     const emailSent = await sendVerificationEmail(user, newOtpCode);
     if (!emailSent) {
+      if (process.env.NODE_ENV === 'development') {
+        return res.status(200).json({
+          success: true,
+          message: `Resent! (Note: Server couldn't deliver email directly; code: ${newOtpCode})`,
+          resendCount: resendCount + 1,
+        });
+      }
       return res.status(500).json({
         success: false,
         message: 'Failed to deliver verification email. Please try again.',

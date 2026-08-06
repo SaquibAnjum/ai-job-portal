@@ -1,6 +1,10 @@
 const nodemailer = require('nodemailer');
 
-const createTransporter = () => {
+let transporterInstance = null;
+
+const getTransporter = () => {
+  if (transporterInstance) return transporterInstance;
+
   const host = process.env.SMTP_HOST || 'smtp.gmail.com';
   const port = parseInt(process.env.SMTP_PORT || '587', 10);
   const user = process.env.SMTP_USER || '';
@@ -11,21 +15,29 @@ const createTransporter = () => {
     return null;
   }
 
-  return nodemailer.createTransport({
-    service: host.includes('gmail') ? 'gmail' : undefined,
-    host,
-    port,
-    secure: process.env.SMTP_SECURE === 'true',
+  const isGmail = host.includes('gmail');
+
+  transporterInstance = nodemailer.createTransport({
+    ...(isGmail ? { service: 'gmail' } : { host, port, secure: process.env.SMTP_SECURE === 'true' }),
     auth: { user, pass },
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
     tls: {
       rejectUnauthorized: false,
     },
   });
+
+  return transporterInstance;
 };
 
 const sendEmail = async ({ to, subject, html, text }) => {
-  const from = process.env.EMAIL_FROM || 'NexHire AI Platform <sak121786@gmail.com>';
-  const transporter = createTransporter();
+  const user = process.env.SMTP_USER || '';
+  const from = process.env.EMAIL_FROM || `NexHire AI Platform <${user || 'sak121786@gmail.com'}>`;
+  const transporter = getTransporter();
 
   if (!transporter) {
     console.error(`[Email Failed]: Cannot send email to ${to}. SMTP Transporter configuration is incomplete.`);
@@ -45,10 +57,11 @@ const sendEmail = async ({ to, subject, html, text }) => {
         'Importance': 'High',
       },
     });
-    console.log(`[Nodemailer Email Delivered Successfully]: MessageID=${info.messageId} To=${to}`);
+    console.log(`[Nodemailer Delivered]: MessageID=${info.messageId} To=${to}`);
     return true;
   } catch (err) {
     console.error('[Nodemailer Delivery Error]:', {
+      to,
       message: err.message,
       code: err.code,
       command: err.command,
