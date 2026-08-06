@@ -55,8 +55,20 @@ const userSchema = new mongoose.Schema(
     resetPasswordExpire: Date,
     refreshToken: String,
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
+
+// Virtual populate candidateProfile
+userSchema.virtual('candidateProfile', {
+  ref: 'CandidateProfile',
+  localField: '_id',
+  foreignField: 'user',
+  justOne: true,
+});
 
 // Encrypt password before saving
 userSchema.pre('save', async function (next) {

@@ -113,9 +113,9 @@ exports.getJobApplicationsRanked = async (req, res, next) => {
 
     const applications = await Application.find(query)
       .populate('job', 'title status location salaryRange requiredSkills')
-      .populate('candidate', 'name email avatar phone')
       .populate({
         path: 'candidate',
+        select: 'name email avatar phone',
         populate: { path: 'candidateProfile', select: 'headline skills resumeUrl' },
       })
       .sort({ 'aiMatchAnalysis.matchScore': -1, createdAt: -1 });
