@@ -99,11 +99,20 @@ exports.getJobApplicationsRanked = async (req, res, next) => {
     const { jobId } = req.params;
     const { status, minScore } = req.query;
 
-    const query = { job: jobId };
+    let query = {};
+    if (jobId && jobId !== 'all') {
+      query.job = jobId;
+    } else {
+      const recruiterJobs = await Job.find({ recruiter: req.user.id });
+      const jobIds = recruiterJobs.map((j) => j._id);
+      query.job = { $in: jobIds };
+    }
+
     if (status) query.status = status;
     if (minScore) query['aiMatchAnalysis.matchScore'] = { $gte: Number(minScore) };
 
     const applications = await Application.find(query)
+      .populate('job', 'title status location salaryRange requiredSkills')
       .populate('candidate', 'name email avatar phone')
       .populate({
         path: 'candidate',

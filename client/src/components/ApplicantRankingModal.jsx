@@ -8,8 +8,11 @@ function ApplicantRankingModal({ isOpen, onClose, jobId, jobTitle }) {
   useEffect(() => {
     if (isOpen && jobId) {
       setLoading(true);
+      const token = localStorage.getItem('token');
       axios
-        .get(`/api/v1/ai/rank-applicants/${jobId}`)
+        .get(`/api/v1/ai/rank-applicants/${jobId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then((res) => {
           setRankedApplicants(res.data.data || []);
         })
