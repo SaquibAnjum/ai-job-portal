@@ -64,8 +64,21 @@ const jobSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['Active', 'Draft', 'Closed', 'Paused', 'Moderation'],
+      enum: ['Active', 'Draft', 'Closed', 'Paused', 'Archived', 'Moderation'],
       default: 'Active',
+    },
+    openings: {
+      type: Number,
+      default: 1,
+    },
+    education: {
+      type: String,
+      default: "Bachelor's Degree",
+    },
+    benefits: [String],
+    hiringManager: {
+      name: { type: String, default: '' },
+      email: { type: String, default: '' },
     },
     applicationsCount: {
       type: Number,

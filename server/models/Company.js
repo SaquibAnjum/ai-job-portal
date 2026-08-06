@@ -39,6 +39,24 @@ const companySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    socialLinks: {
+      linkedin: { type: String, default: '' },
+      twitter: { type: String, default: '' },
+      github: { type: String, default: '' },
+    },
+    hrContact: {
+      name: { type: String, default: '' },
+      email: { type: String, default: '' },
+      phone: { type: String, default: '' },
+    },
+    verificationDocuments: [
+      {
+        name: String,
+        url: String,
+        type: String,
+        uploadedAt: { type: Date, default: Date.now },
+      },
+    ],
     isVerified: {
       type: Boolean,
       default: false,

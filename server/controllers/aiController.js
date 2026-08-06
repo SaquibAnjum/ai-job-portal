@@ -11,6 +11,10 @@ const {
   rankApplicantsWithAI,
   generateTextEmbedding,
   cosineSimilarity,
+  recruiterCopilotWithGemini,
+  compareCandidatesWithGemini,
+  suggestSalaryBenchmarkWithGemini,
+  suggestSkillsForJobWithGemini,
 } = require('../services/aiService');
 const CandidateProfile = require('../models/CandidateProfile');
 const Job = require('../models/Job');
@@ -271,6 +275,65 @@ exports.semanticJobSearch = async (req, res, next) => {
     ranked.sort((a, b) => b.matchScore - a.matchScore);
 
     res.status(200).json({ success: true, count: ranked.length, data: ranked });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc    Recruiter AI Assistant Copilot Chat
+// @route   POST /api/v1/ai/recruiter-copilot
+exports.recruiterCopilot = async (req, res, next) => {
+  try {
+    const { prompt, history, candidates, jobs } = req.body;
+    if (!prompt) {
+      return res.status(400).json({ success: false, message: 'Prompt is required' });
+    }
+
+    const RecruiterProfile = require('../models/RecruiterProfile');
+    const profile = await RecruiterProfile.findOne({ user: req.user.id }).populate('company');
+    const recruiterContext = {
+      name: req.user.name,
+      companyName: profile?.company?.name || 'NexHire Partner',
+    };
+
+    const reply = await recruiterCopilotWithGemini(prompt, history, recruiterContext, candidates || [], jobs || []);
+    res.status(200).json({ success: true, response: reply });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc    Compare Candidates Side-by-side
+// @route   POST /api/v1/ai/compare-candidates
+exports.compareCandidates = async (req, res, next) => {
+  try {
+    const { candidateA, candidateB, job } = req.body;
+    const comparison = await compareCandidatesWithGemini(candidateA || {}, candidateB || {}, job || {});
+    res.status(200).json({ success: true, data: comparison });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc    Suggest Salary Benchmark
+// @route   POST /api/v1/ai/salary-benchmark
+exports.suggestSalaryBenchmark = async (req, res, next) => {
+  try {
+    const { role, skills, location } = req.body;
+    const benchmark = await suggestSalaryBenchmarkWithGemini(role || 'Software Engineer', skills || [], location || 'Remote');
+    res.status(200).json({ success: true, data: benchmark });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc    Suggest Skills for Job
+// @route   POST /api/v1/ai/suggest-skills
+exports.suggestSkills = async (req, res, next) => {
+  try {
+    const { role } = req.body;
+    const skills = await suggestSkillsForJobWithGemini(role || 'Full Stack Engineer');
+    res.status(200).json({ success: true, data: skills });
   } catch (err) {
     next(err);
   }
